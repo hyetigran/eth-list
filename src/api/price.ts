@@ -1,11 +1,6 @@
 import axios from "axios";
 
-let COINMARKETCAP_BASE_URL = "https://pro-api.coinmarketcap.com";
-
-if (process.env.NODE_ENV === "development") {
-  COINMARKETCAP_BASE_URL =
-    "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com";
-}
+const COINMARKETCAP_BASE_URL = "https://pro-api.coinmarketcap.com";
 
 /** Returns price data
  *
@@ -15,7 +10,7 @@ if (process.env.NODE_ENV === "development") {
 export const fetchPrice = async (coinId: number) => {
   try {
     const resp = await axios(
-      `${COINMARKETCAP_BASE_URL}/v2/cryptocurrency/quotes/latest?id=${coinId}`,
+      `https://cors-anywhere.herokuapp.com/${COINMARKETCAP_BASE_URL}/v2/cryptocurrency/quotes/latest?id=${coinId}`,
       {
         headers: {
           "Content-Type": "application/json",

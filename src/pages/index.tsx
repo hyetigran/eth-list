@@ -5,8 +5,8 @@ import { BlockHeader } from "web3-eth";
 import TableList from "@/components/home/TableList";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { fetchPrice } from "@/api/price";
-const ETH_ID = 1027;
 
+const ETH_ID = 1027;
 const web3 = new Web3(
   Web3.givenProvider ||
     "wss://eth-mainnet.alchemyapi.io/v2/GNauZOAEhjOc34zQQqQuXorOlmC6wJ6W"
