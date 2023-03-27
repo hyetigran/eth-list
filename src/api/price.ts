@@ -4,7 +4,7 @@ const COINMARKETCAP_BASE_URL = "https://pro-api.coinmarketcap.com";
 
 /** Returns price data
  *
- * @param coinId The HH AMM Program.
+ * @param coinId corresponding coinmarketcap api id
  * @returns price of 1 unit coinId in USD
  */
 export const fetchPrice = async (coinId: number) => {
