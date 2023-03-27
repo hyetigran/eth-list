@@ -11,17 +11,20 @@ import {
 } from "@chakra-ui/react";
 import TableItem from "./TableItem";
 import { Transaction } from "web3-core";
+import { fromWei } from "web3-utils";
 import { useMemo } from "react";
 
 interface TableListProps {
   transactions: Transaction[];
   hideZeroValue: boolean;
+  ethPrice: number;
   toggleZeroValue: () => void;
 }
 
 const TableList = ({
   transactions,
   hideZeroValue,
+  ethPrice,
   toggleZeroValue,
 }: TableListProps) => {
   const filteredTransactions = useMemo(() => {
@@ -30,7 +33,6 @@ const TableList = ({
     }
     return transactions.filter((txn) => txn.value !== "0");
   }, [transactions, hideZeroValue]);
-
   return filteredTransactions.length ? (
     <TableContainer
       justifyContent='center'
@@ -56,17 +58,27 @@ const TableList = ({
           </Tr>
         </Thead>
         <Tbody>
-          {filteredTransactions.map((item, idx) => (
-            <TableItem
-              key={idx}
-              item={{
-                num: idx + 1,
-                fromAddress: item.from,
-                toAddress: item.to ?? " - ",
-                value: item.value,
-              }}
-            />
-          ))}
+          {filteredTransactions.map((item, idx) => {
+            // Display eth value if price is unavailable
+            const ethAmount = Number(fromWei(item.value, "ether"));
+            const amount = ethPrice ? ethAmount * ethPrice : ethAmount;
+
+            const displayValue = ethPrice
+              ? `${amount.toFixed(2)} USD`
+              : `${amount.toFixed(6)} ETH`;
+
+            return (
+              <TableItem
+                key={idx}
+                item={{
+                  num: idx + 1,
+                  fromAddress: item.from,
+                  toAddress: item.to ?? " - ",
+                  value: displayValue,
+                }}
+              />
+            );
+          })}
         </Tbody>
       </Table>
     </TableContainer>
