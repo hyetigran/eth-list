@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import styles from "@/styles/Home.module.css";
 import Web3 from "web3";
 import { Transaction } from "web3-core";
 import { BlockHeader } from "web3-eth";
@@ -50,6 +49,7 @@ export default function Home() {
         });
       })
       .on("error", console.error);
+
     // unsubscribes the subscription
     return () => {
       subscription.unsubscribe(function (error, success) {
@@ -61,7 +61,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className={styles.main}>
+    <Flex alignItems='center' padding='6rem' minHeight='100vh' flexDir='column'>
       <Flex w='100%' justifyContent='space-between'>
         <p>Block Height: {blockHeader?.number ?? " - "}</p>
         {isLoading && (
@@ -73,6 +73,6 @@ export default function Home() {
         hideZeroValue={hideZeroValue}
         toggleZeroValue={() => setHideZeroValue((prevState) => !prevState)}
       />
-    </section>
+    </Flex>
   );
 }
